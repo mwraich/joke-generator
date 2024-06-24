@@ -30,6 +30,16 @@ export default function JokeGenerator() {
 	const generateJokePrompt = () => {
 		return `Tell me a ${tone} joke about ${topic} that is ${randomness} random and ${length} in length for ${audience}.`;
 	};
+
+	const reviewLastMessage = () => {
+		if (messages.length === 0) {
+			alert("No messages to review.");
+			return;
+		}
+		const lastMessage = messages[messages.length - 1].content;
+		const reviewPrompt = `Please review and critique the following joke: ${lastMessage}`;
+		append({ role: 'user', content: reviewPrompt });
+	};
 	return (
 		<div className="flex flex-col h-screen w-full max-w-md py-24 mx-auto stretch">
 			<h1 className="text-center mb-6 text-2xl font-bold">Joke Generator</h1>
@@ -131,6 +141,15 @@ export default function JokeGenerator() {
 						}
 					>
 						Generate a joke
+					</button>
+				</div>
+				<div className="flex flex-col justify-center mb-2 items-center">
+					<button
+						className="bg-blue-500 p-2 text-white rounded shadow-xl"
+						disabled={isLoading}
+						onClick={reviewLastMessage}
+					>
+						Review Last Joke
 					</button>
 				</div>
 			</div>
